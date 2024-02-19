@@ -21,7 +21,7 @@ export const Pessoas = sequelize.define<UserInstance>("Pessoas", {
         type: DataTypes.STRING
     },
     cpf: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
             is: /^[0-9]{11}$/,
@@ -39,7 +39,6 @@ export const Pessoas = sequelize.define<UserInstance>("Pessoas", {
             notEmpty: true
         },
         set(value: string) {
-            // Limpa caracteres não numéricos antes de salvar no banco de dados
             this.setDataValue('rg', value.replace(/\D/g, ''));
         }
     },

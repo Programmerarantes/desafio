@@ -44,5 +44,38 @@ export const listarCpf = async (req: Request, res: Response) => {
 
     } catch (error) 
     {console.log(error)}
+}
 
+export const updateUsuario = async (req: Request, res: Response) => {
+    try {
+        let { id } = req.params
+        let {nome, cpf, rg, dataNascimento, sexo} = req.body
+
+        let user = await Pessoas.findByPk(id)
+        if(user) {
+            await user.update({
+                nome,
+                rg,
+                cpf,
+                dataNascimento,
+                sexo
+            })
+
+            res.json({pessoa: user})
+
+        } else {res.json({error: 'Pessoa não encontrada'})}
+        
+    } catch(error) {
+        console.log(error)
+    }
+}
+
+export const deleteUsuario = async (req: Request, res: Response) => {
+    let { id } = req.params
+
+    await Pessoas.destroy({
+        where: { id }
+    })
+    
+    res.json({})    
 }
